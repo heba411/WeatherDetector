@@ -34,7 +34,6 @@ void main() async {
   runApp(
     MultiBlocProvider(
       providers: [
-        // Authentication Providers
         Provider<AuthRepository>(
           create: (_) => AuthRepositoryImpl(
             firebaseAuth: FirebaseAuth.instance,
