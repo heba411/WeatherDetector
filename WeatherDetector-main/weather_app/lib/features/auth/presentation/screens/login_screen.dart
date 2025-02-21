@@ -4,7 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:weather_app/core/style/colors.dart';
 import 'package:weather_app/features/auth/presentation/cubit/auth_states.dart';
 import 'package:weather_app/features/auth/presentation/screens/signup_screen.dart';
-import 'package:weather_app/features/auth/presentation/screens/weather_screen.dart';
+import 'package:weather_app/features/home/presentation/screens/weather_screen.dart';
 import '../../../../core/components/components.dart';
 import '../../../../core/helper/cashe.dart';
 import '../cubit/auth_cubit.dart';
@@ -17,6 +17,8 @@ class LoginScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    double screenWidth = MediaQuery.of(context).size.width;
+    double screenHeight = MediaQuery.of(context).size.height;
     return  BlocConsumer<AuthCubit, AuthStates>(
         listener: (context, state){
           if(state is LoginErrorState)
@@ -44,9 +46,9 @@ class LoginScreen extends StatelessWidget {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      SizedBox(height: 130,),
+                      SizedBox(height: screenWidth * 0.2,),
                       Padding(
-                        padding: EdgeInsets.symmetric(horizontal: 20),
+                        padding: EdgeInsets.symmetric(horizontal: screenWidth * 0.05,),
                         child: Text(
                           'Login',
                           textAlign: TextAlign.start,
@@ -57,9 +59,9 @@ class LoginScreen extends StatelessWidget {
                           ),
                         ),
                       ),
-                      SizedBox(height: 25,),
+                      SizedBox(height: screenWidth * 0.05),
                       Padding(
-                        padding: EdgeInsets.symmetric(horizontal: 20),
+                        padding: EdgeInsets.symmetric(horizontal: screenWidth * 0.05),
                         child: defaultTextFormField(
                             control: email,
                             prefIcon: Icons.email_outlined,
@@ -73,9 +75,9 @@ class LoginScreen extends StatelessWidget {
                             },
                             textInputType: TextInputType.text),
                       ),
-                      SizedBox(height: 25,),
+                      SizedBox(height: screenWidth * 0.05,),
                       Padding(
-                        padding: EdgeInsets.symmetric(horizontal: 20),
+                        padding: EdgeInsets.symmetric(horizontal: screenWidth * 0.05),
                         child: defaultTextFormField(
                             control: password,
                             prefIcon: Icons.lock_outline,
@@ -94,11 +96,11 @@ class LoginScreen extends StatelessWidget {
                             isPassword: AuthCubit.get(context).isPasswordHidden,
                             textInputType: TextInputType.text),
                       ),
-                      SizedBox(height: 30,),
+                      SizedBox(height: screenWidth * 0.06,),
                       ConditionalBuilder(
                         condition: state is! LoginLoadingState,
                         builder: (context) => Padding(
-                          padding: EdgeInsets.symmetric(horizontal: 20),
+                          padding: EdgeInsets.symmetric(horizontal: screenWidth * 0.05),
                           child: defaultButton(function: (){
                             if(formKey.currentState!.validate())
                             {
@@ -108,7 +110,7 @@ class LoginScreen extends StatelessWidget {
                         ),
                         fallback: (context) => Center(child: CircularProgressIndicator(color: Colors.black,)),
                       ),
-                      SizedBox(height: 50,),
+                      SizedBox(height: screenWidth * 0.1,),
                       Center(
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.center,

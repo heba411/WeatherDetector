@@ -12,11 +12,12 @@ class SignupScreen extends StatelessWidget
 {
   @override
   Widget build(BuildContext context) {
+    double screenWidth = MediaQuery.of(context).size.width;
+    double screenHeight = MediaQuery.of(context).size.height;
     var name = TextEditingController();
     var email = TextEditingController();
     var phone = TextEditingController();
     var password = TextEditingController();
-    var confirmPassword = TextEditingController();
     var formKey = GlobalKey<FormState>();
 
     return  BlocConsumer<AuthCubit, AuthStates>(
@@ -41,9 +42,9 @@ class SignupScreen extends StatelessWidget
                     crossAxisAlignment: CrossAxisAlignment.start,
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      SizedBox(height: 100,),
+                      SizedBox(height: screenWidth * 0.25,),
                       Padding(
-                        padding: EdgeInsets.symmetric(horizontal: 20),
+                        padding: EdgeInsets.symmetric(horizontal: screenWidth * 0.05),
                         child: Text(
                           'Sign up',
                           textAlign: TextAlign.start,
@@ -54,9 +55,9 @@ class SignupScreen extends StatelessWidget
                           ),
                         ),
                       ),
-                      SizedBox(height: 20,),
+                      SizedBox(height: screenWidth * 0.05,),
                       Padding(
-                        padding: EdgeInsets.symmetric(horizontal: 20),
+                        padding: EdgeInsets.symmetric(horizontal: screenWidth * 0.05),
                         child: defaultTextFormField(
                             control: name,
                             prefIcon: Icons.person,
@@ -70,9 +71,9 @@ class SignupScreen extends StatelessWidget
                             },
                             textInputType: TextInputType.text),
                       ),
-                      SizedBox(height: 20,),
+                      SizedBox(height: screenWidth * 0.05,),
                       Padding(
-                        padding: EdgeInsets.symmetric(horizontal: 20),
+                        padding: EdgeInsets.symmetric(horizontal: screenWidth * 0.05),
                         child: defaultTextFormField(
                             control: email,
                             prefIcon: Icons.email,
@@ -86,9 +87,9 @@ class SignupScreen extends StatelessWidget
                             },
                             textInputType: TextInputType.emailAddress),
                       ),
-                      SizedBox(height: 25,),
+                      SizedBox(height: screenWidth * 0.055,),
                       Padding(
-                        padding: EdgeInsets.symmetric(horizontal: 20),
+                        padding: EdgeInsets.symmetric(horizontal: screenWidth * 0.05),
                         child: defaultTextFormField(
                             control: phone,
                             prefIcon: Icons.phone,
@@ -102,9 +103,9 @@ class SignupScreen extends StatelessWidget
                             },
                             textInputType: TextInputType.phone),
                       ),
-                      SizedBox(height: 20,),
+                      SizedBox(height: screenWidth * 0.05,),
                       Padding(
-                        padding: EdgeInsets.symmetric(horizontal: 20),
+                        padding: EdgeInsets.symmetric(horizontal: screenWidth * 0.05),
                         child: defaultTextFormField(
                             control: password,
                             prefIcon: Icons.lock,
@@ -123,36 +124,11 @@ class SignupScreen extends StatelessWidget
                             isPassword: AuthCubit.get(context).isPasswordHidden,
                             textInputType: TextInputType.text),
                       ),
-                      // SizedBox(height: 20,),
-                      // Padding(
-                      //   padding: EdgeInsets.symmetric(horizontal: 20),
-                      //   child: defaultTextFormField(
-                      //       control: confirmPassword,
-                      //       prefIcon: Icons.lock,
-                      //       label: 'Confirm Password',
-                      //       validate: (value){
-                      //         if(value!.isEmpty)
-                      //         {
-                      //           return 'Enter your password';
-                      //         }
-                      //         if(value.compareTo(password.text) != 0)
-                      //         {
-                      //           return 'Password does not match';
-                      //         }
-                      //         return null;
-                      //       },
-                      //       suffxIcon: AuthCubit.get(context).passwordIcon,
-                      //       onPressedSuffix: (){
-                      //         AuthCubit.get(context).togglePasswordVisibility();
-                      //       },
-                      //       isPassword: AuthCubit.get(context).isPasswordHidden,
-                      //       textInputType: TextInputType.text),
-                      // ),
-                      SizedBox(height: 20,),
+                      SizedBox(height: screenWidth * 0.05,),
                       ConditionalBuilder(
                         condition: state is! SignUpLoadingState,
                         builder: (context) => Padding(
-                          padding: EdgeInsets.symmetric(horizontal: 20),
+                          padding: EdgeInsets.symmetric(horizontal: screenWidth * 0.05),
                           child: defaultButton(function: (){
                             if(formKey.currentState!.validate())
                             {
@@ -169,7 +145,7 @@ class SignupScreen extends StatelessWidget
                         ),
                         fallback: (context) => Center(child: CircularProgressIndicator(color: Colors.black,)),
                       ),
-                      SizedBox(height: 50,),
+                      SizedBox(height: screenWidth * 0.1,),
                       Center(
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.center,

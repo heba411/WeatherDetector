@@ -18,7 +18,7 @@ class StartScreen extends StatelessWidget {
           fit: BoxFit.cover,
         ),
           Padding(
-            padding: const EdgeInsets.all(8.0),
+            padding:  EdgeInsets.all(screenWidth * 0.02),
             child: defaultButton(function: (){
               Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=> LoginScreen(),));
             }, text: 'Get started'),

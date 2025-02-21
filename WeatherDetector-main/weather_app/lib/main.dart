@@ -15,11 +15,11 @@ import 'package:weather_app/features/auth/domain/usecases/signup_usecase.dart';
 import 'package:weather_app/features/auth/domain/usecases/login_usecase.dart';
 import 'package:weather_app/features/auth/presentation/cubit/auth_cubit.dart';
 import 'package:weather_app/features/auth/presentation/screens/start_screen.dart';
-import 'features/auth/data/repo_implementation/weather_repo_implementation.dart';
-import 'features/auth/domain/repos/weather_repo.dart';
-import 'features/auth/domain/usecases/weather_useCase.dart';
-import 'features/auth/presentation/cubit/weather_cubit.dart';
-import 'features/auth/presentation/screens/weather_screen.dart';
+import 'features/home/data/repo_implementation/weather_repo_implementation.dart';
+import 'features/home/domain/repos/weather_repo.dart';
+import 'features/home/domain/usecases/weather_useCase.dart';
+import 'features/home/presentation/cubit/weather_cubit.dart';
+import 'features/home/presentation/screens/weather_screen.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -28,7 +28,7 @@ void main() async {
   DioHelper.init();
   await CacheHelper.init();
   final dio = Dio();
-  final weatherRepository = WeatherRepositoryImpl(dio);
+  final weatherRepository = WeatherRepositoryImpl(dio: dio);
   final getWeather = GetWeather(weatherRepository);
 
   runApp(
@@ -54,7 +54,7 @@ void main() async {
           ),
         ),
         Provider<WeatherRepository>(
-          create: (_) => WeatherRepositoryImpl(dio), // Ensure this exists
+          create: (_) => WeatherRepositoryImpl(dio: dio), // Ensure this exists
         ),
         Provider<GetWeather>(
           create: (context) => GetWeather(context.read<WeatherRepository>()),
