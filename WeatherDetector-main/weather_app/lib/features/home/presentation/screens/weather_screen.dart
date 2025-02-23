@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:weather_app/core/components/components.dart';
 import 'package:weather_app/core/style/colors.dart';
 import '../cubit/weather_cubit.dart';
+import '../cubit/weather_states.dart';
 import '../widgets/weather_display.dart';
 
 class WeatherScreen extends StatelessWidget {
@@ -42,16 +43,16 @@ class WeatherScreen extends StatelessWidget {
             },
                 text: 'Display Weather'),
             Expanded(
-              child: BlocBuilder<WeatherCubit, WeatherState>(
+              child: BlocBuilder<WeatherCubit, WeatherStates>(
                 builder: (context, state) {
-                  if (state is WeatherLoading) {
+                  if (state is WeatherLoadingState) {
                     return Center(child: CircularProgressIndicator());
-                  } else if (state is WeatherLoaded) {
+                  } else if (state is WeatherSuccessState) {
                     return WeatherWidget(weather: state.weather);
-                  } else if (state is WeatherError) {
+                  } else if (state is WeatherErrorState) {
                     return Center(child: Text(state.message));
                   }
-                  return Center(child: Text("Enter a city"));
+                  return Center(child: Text(""));
                 },
               ),
             ),
