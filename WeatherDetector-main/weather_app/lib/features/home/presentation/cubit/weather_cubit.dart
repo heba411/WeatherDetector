@@ -1,32 +1,19 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
-import '../../domain/entities/weather.dart';
+import 'package:weather_app/features/home/presentation/cubit/weather_states.dart';
 import '../../domain/usecases/weather_useCase.dart';
 
-abstract class WeatherState {}
-
-class WeatherInitial extends WeatherState {}
-class WeatherLoading extends WeatherState {}
-class WeatherLoaded extends WeatherState {
-  final WeatherEntity weather;
-  WeatherLoaded(this.weather);
-}
-class WeatherError extends WeatherState {
-  final String message;
-  WeatherError(this.message);
-}
-
-class WeatherCubit extends Cubit<WeatherState> {
+class WeatherCubit extends Cubit<WeatherStates> {
   final GetWeather getWeatherUseCase;
 
-  WeatherCubit(this.getWeatherUseCase) : super(WeatherInitial());
+  WeatherCubit(this.getWeatherUseCase) : super(WeatherInitialState());
 
   void fetchWeather(String cityName) async {
-    emit(WeatherLoading());
+    emit(WeatherLoadingState());
     try {
       final weather = await getWeatherUseCase(cityName);
-      emit(WeatherLoaded(weather));
+      emit(WeatherSuccessState(weather));
     } catch (e) {
-      emit(WeatherError(e.toString()));
+      emit(WeatherErrorState(e.toString()));
     }
   }
 }
