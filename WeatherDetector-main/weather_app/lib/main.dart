@@ -59,7 +59,7 @@ void main() async {
           ),
         ),
         Provider<WeatherRepository>(
-          create: (_) => WeatherRepositoryImpl(dio: dio), // Ensure this exists
+          create: (_) => WeatherRepositoryImpl(dio: dio),
         ),
         Provider<GetWeather>(
           create: (context) => GetWeather(context.read<WeatherRepository>()),
@@ -73,10 +73,6 @@ void main() async {
         BlocProvider<WeatherCubit>(
           create: (context) => WeatherCubit(context.read<GetWeather>(),context.read<GetPredictionUseCase>()),
         ),
-
-        // BlocProvider<WeatherCubit>(
-        //   create: (context) => WeatherCubit(getWeather),
-        // ),
       ],
       child: const MyApp(),
     ),
