@@ -15,8 +15,11 @@ import 'package:weather_app/features/auth/domain/usecases/signup_usecase.dart';
 import 'package:weather_app/features/auth/domain/usecases/login_usecase.dart';
 import 'package:weather_app/features/auth/presentation/cubit/auth_cubit.dart';
 import 'package:weather_app/features/auth/presentation/screens/start_screen.dart';
+import 'features/home/data/repo_implementation/ml_repo_implementation.dart';
 import 'features/home/data/repo_implementation/weather_repo_implementation.dart';
+import 'features/home/domain/repos/ml_repo.dart';
 import 'features/home/domain/repos/weather_repo.dart';
+import 'features/home/domain/usecases/ml_usecase.dart';
 import 'features/home/domain/usecases/weather_useCase.dart';
 import 'features/home/presentation/cubit/weather_cubit.dart';
 import 'features/home/presentation/screens/weather_screen.dart';
@@ -30,6 +33,9 @@ void main() async {
   final dio = Dio();
   final weatherRepository = WeatherRepositoryImpl(dio: dio);
   final getWeather = GetWeather(weatherRepository);
+
+  final mlRepository = MLRepositoryImpl(dio);
+  final getPredictionUseCase = GetPredictionUseCase(mlRepository);
 
   runApp(
     MultiBlocProvider(
@@ -58,9 +64,16 @@ void main() async {
         Provider<GetWeather>(
           create: (context) => GetWeather(context.read<WeatherRepository>()),
         ),
-        BlocProvider<WeatherCubit>(
-          create: (context) => WeatherCubit(context.read<GetWeather>()),
+        Provider<MLRepository>(
+          create: (_) => mlRepository,
         ),
+        Provider<GetPredictionUseCase>(
+          create: (context) => GetPredictionUseCase(context.read<MLRepository>()),
+        ),
+        BlocProvider<WeatherCubit>(
+          create: (context) => WeatherCubit(context.read<GetWeather>(),context.read<GetPredictionUseCase>()),
+        ),
+
         // BlocProvider<WeatherCubit>(
         //   create: (context) => WeatherCubit(getWeather),
         // ),

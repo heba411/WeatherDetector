@@ -20,6 +20,16 @@ class WeatherEntity {
     required this.visibility,
     required this.humidity,
   });
+
+  List<int> toFeatureArray() {
+    return [
+      condition.toLowerCase().contains('rain') ? 1 : 0,  // Rainy
+      condition.toLowerCase().contains('sunny') ? 1 : 0, // Sunny
+      temperature >= 30 ? 1 : 0, // Hot temperature
+      (temperature >= 20 && temperature < 30) ? 1 : 0, // Mild temperature
+      humidity < 60 ? 1 : 0 // Normal humidity
+    ];
+  }
 }
 
 class ForecastDayEntity {
@@ -37,3 +47,6 @@ class ForecastDayEntity {
     required this.iconUrl,
   });
 }
+
+
+

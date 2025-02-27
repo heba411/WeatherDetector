@@ -8,8 +8,10 @@ class WeatherLoadingState extends WeatherStates {}
 
 class WeatherSuccessState extends WeatherStates {
   final WeatherEntity weather;
-  WeatherSuccessState(this.weather);
+  final int prediction; // 0 (Go) or 1 (Stay Home)
+  WeatherSuccessState(this.weather, this.prediction);
 }
+
 
 class WeatherErrorState extends WeatherStates {
   final String message;

@@ -21,9 +21,7 @@ class WeatherRepositoryImpl implements WeatherRepository {
           'alerts': 'no',
         },
       );
-
       print("API Response: ${response.data}");
-
       return WeatherModel.fromJson(response.data);
     } on DioException catch (e) {
       throw Exception("Failed to load weather: ${e.response?.statusCode}");
